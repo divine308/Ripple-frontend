@@ -272,54 +272,64 @@ export default function Overview() {
   return ( 
     <div className="min-h-full bg-[#090c11]"> 
  
-      <div className="border-b border-white/[0.08] bg-[#0c1016] px-6 py-6"> 
-        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center"> 
- 
-          <div> 
-            <div className="mb-2 flex items-center gap-2"> 
-              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-400"> 
-                Workspace 
-              </span> 
- 
-              <span className="h-1 w-1 rounded-full bg-zinc-500" /> 
- 
-              <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-emerald-400"> 
-                Connected 
-              </span> 
-            </div> 
- 
-            <h1 className="text-2xl font-bold tracking-tight text-white"> 
-              {repository.name} 
-            </h1> 
- 
-            <p className="mt-1.5 text-[13px] text-zinc-300"> 
-              Repository intelligence overview 
-            </p> 
-          </div> 
- 
-          <button 
-            onClick={openUpload} 
-            className=" 
-              inline-flex items-center justify-center gap-2 
-              rounded-xl border border-white/[0.10] 
-              bg-white/[0.045] 
-              px-4 py-2.5 
-              text-xs font-semibold text-zinc-200 
-              transition 
-              hover:border-blue-400/25 
-              hover:bg-blue-500/10 
-              hover:text-white 
-            " 
-          > 
-            <Upload size={14} /> 
-            Change Repository 
-          </button> 
-        </div> 
-      </div> 
+      <div className="border-b border-white/[0.08] bg-[#0c1016] px-4 py-5 sm:px-6 sm:py-6">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-400">
+                Workspace
+              </span>
+
+              <span className="h-1 w-1 shrink-0 rounded-full bg-zinc-500" />
+
+              <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-emerald-400">
+                Connected
+              </span>
+            </div>
+
+            <h1
+              className="
+                max-w-full
+                break-words
+                text-xl font-bold tracking-tight text-white
+                sm:text-2xl
+              "
+              title={repository.name}
+            >
+              {repository.name}
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-zinc-300 sm:text-[13px]">
+              Repository intelligence overview
+            </p>
+          </div>
+
+          <button
+            onClick={openUpload}
+            className="
+              inline-flex w-full shrink-0 items-center justify-center gap-2
+              rounded-xl border border-white/[0.10]
+              bg-white/[0.045]
+              px-4 py-2.5
+              text-xs font-semibold text-zinc-200
+              transition
+              hover:border-blue-400/25
+              hover:bg-blue-500/10
+              hover:text-white
+              sm:w-auto
+            "
+          >
+            <Upload size={14} />
+            Change Repository
+          </button>
+
+        </div>
+      </div>
  
       <Metrics repository={repository} /> 
  
-      <div className="px-6 py-7"> 
+      <div className="px-4 py-6 sm:px-6 sm:py-7"> 
  
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-end"> 
           <div> 

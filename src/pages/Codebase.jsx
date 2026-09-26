@@ -1,5 +1,6 @@
 
 import {
+  ArrowLeft,
   Check,
   ChevronRight,
   Code2,
@@ -157,8 +158,8 @@ export default function Codebase() {
   if (!repository) {
     return (
       <div className="flex h-[calc(100vh-4rem)] min-h-0 flex-col overflow-hidden bg-[#090c11] text-white">
-        <div className="border-b border-white/[0.09] px-6 py-5">
-          <div className="flex items-center gap-2 text-[11px] font-medium text-zinc-400">
+        <div className="shrink-0 border-b border-white/[0.09] px-4 py-4 sm:px-6 sm:py-5">
+          <div className="flex items-center gap-2 text-[10px] font-medium text-zinc-400 sm:text-[11px]">
             <span>Intelligence</span>
 
             <ChevronRight
@@ -171,18 +172,18 @@ export default function Codebase() {
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+          <h1 className="mt-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
             Codebase
           </h1>
 
-          <p className="mt-1 text-[14px] leading-7 text-zinc-300">
+          <p className="mt-1 text-[12px] leading-6 text-zinc-300 sm:text-[14px] sm:leading-7">
             Explore your repository structure and
             inspect source files.
           </p>
         </div>
 
-        <div className="flex min-h-0 flex-1 items-center justify-center p-8">
-          <div className="w-full max-w-md rounded-2xl border border-white/[0.09] bg-[#11151c] p-8 text-center">
+        <div className="flex min-h-0 flex-1 items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-md rounded-2xl border border-white/[0.09] bg-[#11151c] p-6 text-center sm:p-8">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.09] bg-white/[0.035]">
               <Code2
                 size={22}
@@ -206,8 +207,9 @@ export default function Codebase() {
 
   return (
     <div className="flex h-[calc(100vh-4rem)] min-h-0 flex-col overflow-hidden bg-[#090c11] text-white">
-      <div className="shrink-0 border-b border-white/[0.09] px-6 py-5">
-        <div className="flex items-center gap-2 text-[11px] font-medium text-zinc-400">
+      {/* PAGE HEADER */}
+      <div className="shrink-0 border-b border-white/[0.09] bg-[#0c1016] px-4 py-4 sm:px-6 sm:py-5">
+        <div className="flex items-center gap-2 text-[10px] font-medium text-zinc-400 sm:text-[11px]">
           <span>Intelligence</span>
 
           <ChevronRight
@@ -220,58 +222,70 @@ export default function Codebase() {
           </span>
         </div>
 
-        <div className="mt-2 flex items-end justify-between gap-6">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-white">
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="min-w-0">
+            <h1 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
               Codebase
             </h1>
 
-            <p className="mt-1 text-[14px] leading-7 text-zinc-300">
+            <p className="mt-1 text-[12px] leading-6 text-zinc-300 sm:text-[14px] sm:leading-7">
               Explore your repository structure and
               inspect source files.
             </p>
           </div>
 
-          <div className="hidden items-center gap-5 text-[11px] font-medium text-zinc-300 sm:flex">
+          <div className="flex items-center gap-4 text-[10px] font-medium text-zinc-300 sm:gap-5 sm:text-[11px]">
             <span>
-              {nodes.filter(
-                (node) => node.type === "file"
-              ).length}{" "}
+              {
+                nodes.filter(
+                  (node) => node.type === "file"
+                ).length
+              }{" "}
               files
             </span>
 
             <span>
-              {new Set(
-                nodes
-                  .map((node) => {
-                    const path =
-                      node.path || "";
+              {
+                new Set(
+                  nodes
+                    .map((node) => {
+                      const path =
+                        node.path || "";
 
-                    const parts =
-                      path.split(".");
+                      const parts =
+                        path.split(".");
 
-                    return parts.length > 1
-                      ? parts.pop()
-                      : null;
-                  })
-                  .filter(Boolean)
-              ).size}{" "}
+                      return parts.length > 1
+                        ? parts.pop()
+                        : null;
+                    })
+                    .filter(Boolean)
+                ).size
+              }{" "}
               languages
             </span>
           </div>
         </div>
       </div>
 
+      {/* MAIN AREA */}
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
+
+        {/* FILE EXPLORER */}
         <aside
           className={[
-            "w-full shrink-0 border-b border-white/[0.09] bg-[#0c1016]",
+            selectedNode
+              ? "hidden lg:flex"
+              : "flex",
+            "w-full min-h-0 shrink-0 bg-[#0c1016]",
+            "border-b border-white/[0.09]",
             "lg:w-[330px] lg:border-b-0 lg:border-r",
-            "border-white/[0.09]",
           ].join(" ")}
         >
-          <div className="flex h-full min-h-0 flex-col">
-            <div className="shrink-0 border-b border-white/[0.09] p-4">
+          <div className="flex h-full min-h-0 w-full flex-col">
+
+            {/* SEARCH */}
+            <div className="shrink-0 border-b border-white/[0.09] p-3 sm:p-4">
               <div className="relative">
                 <Search
                   size={15}
@@ -284,12 +298,19 @@ export default function Codebase() {
                     setQuery(event.target.value)
                   }
                   placeholder="Search files..."
-                  className="h-9 w-full rounded-lg border border-white/[0.09] bg-white/[0.025] pl-9 pr-3 text-[12px] font-medium text-white outline-none placeholder:text-zinc-400 focus:border-white/[0.16] focus:bg-white/[0.035]"
+                  className="h-10 w-full rounded-lg border border-white/[0.09] bg-white/[0.025] pl-9 pr-3 text-[12px] font-medium text-white outline-none placeholder:text-zinc-400 focus:border-white/[0.16] focus:bg-white/[0.035]"
                 />
               </div>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
+            {/* FILE LIST */}
+            <div
+              className="h-0 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain"
+              style={{
+                WebkitOverflowScrolling: "touch",
+                touchAction: "pan-y",
+              }}
+            >
               {filtered.length === 0 ? (
                 <div className="p-6 text-center text-[12px] text-zinc-300">
                   No matching files.
@@ -328,6 +349,7 @@ export default function Codebase() {
                             : "border border-transparent hover:border-white/[0.06] hover:bg-white/[0.035]",
                         ].join(" ")}
                       >
+                        {/* ICON */}
                         <div
                           className={[
                             "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border",
@@ -357,10 +379,11 @@ export default function Codebase() {
                           )}
                         </div>
 
+                        {/* FILE INFO */}
                         <div className="min-w-0 flex-1">
                           <div
                             className={[
-                              "truncate text-[12px] font-medium",
+                              "break-words text-[12px] font-medium leading-5",
                               isSelected
                                 ? "text-white"
                                 : "text-zinc-300",
@@ -371,7 +394,7 @@ export default function Codebase() {
 
                           {path &&
                             path !== label && (
-                              <div className="mt-0.5 truncate text-[11px] text-zinc-300">
+                              <div className="mt-0.5 break-all text-[10px] leading-4 text-zinc-400">
                                 {path}
                               </div>
                             )}
@@ -392,9 +415,18 @@ export default function Codebase() {
           </div>
         </aside>
 
-        <main className="min-h-0 min-w-0 flex-1 max-h-[calc(100vh-9rem)] overflow-hidden bg-[#11151c]">
+        {/* CODE VIEWER */}
+        <main
+          className={[
+            selectedNode
+              ? "flex"
+              : "hidden lg:flex",
+            "min-h-0 min-w-0 flex-1 overflow-hidden bg-[#11151c]",
+          ].join(" ")}
+        >
           {!selectedNode ? (
-            <div className="flex h-full min-h-[500px] items-center justify-center p-8">
+            /* EMPTY STATE */
+            <div className="flex h-full min-h-[400px] w-full items-center justify-center p-6 sm:min-h-[500px] sm:p-8">
               <div className="max-w-sm text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.09] bg-white/[0.025]">
                   <Code2
@@ -414,9 +446,24 @@ export default function Codebase() {
               </div>
             </div>
           ) : (
-            <div className="flex h-full min-h-0 flex-col overflow-hidden">
-              <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/[0.09] bg-[#0c1016] px-5 py-3">
-                <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-full min-h-0 w-full flex-col overflow-hidden">
+
+              {/* CODE HEADER */}
+              <div className="flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.09] bg-[#0c1016] px-3 py-2.5 sm:gap-4 sm:px-5 sm:py-3">
+
+                <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+
+                  {/* MOBILE BACK */}
+                  <button
+                    type="button"
+                    onClick={closeViewer}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.09] bg-white/[0.025] text-zinc-300 transition hover:bg-white/[0.06] hover:text-white lg:hidden"
+                    aria-label="Back to files"
+                  >
+                    <ArrowLeft size={15} />
+                  </button>
+
+                  {/* FILE ICON */}
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.09] bg-white/[0.025]">
                     <FileCode2
                       size={15}
@@ -424,25 +471,30 @@ export default function Codebase() {
                     />
                   </div>
 
+                  {/* FILE NAME */}
                   <div className="min-w-0">
-                    <div className="truncate text-[12px] font-semibold text-white">
+                    <div className="truncate text-[11px] font-semibold text-white sm:text-[12px]">
                       {selectedNode.label ||
                         selectedNode.path}
                     </div>
 
-                    <div className="mt-0.5 truncate text-[11px] text-zinc-300">
+                    <div className="max-w-[42vw] truncate text-[9px] text-zinc-400 sm:max-w-[30vw] sm:text-[11px]">
                       {selectedNode.path}
                     </div>
                   </div>
 
+                  {/* LANGUAGE */}
                   {fileData?.language && (
-                    <span className="hidden shrink-0 rounded-md border border-white/[0.09] bg-white/[0.025] px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-zinc-300 sm:inline-flex">
+                    <span className="hidden shrink-0 rounded-md border border-white/[0.09] bg-white/[0.025] px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-zinc-300 md:inline-flex">
                       {fileData.language}
                     </span>
                   )}
                 </div>
 
+                {/* ACTIONS */}
                 <div className="flex shrink-0 items-center gap-1">
+
+                  {/* COPY */}
                   <button
                     type="button"
                     onClick={copyCode}
@@ -452,6 +504,7 @@ export default function Codebase() {
                     {copied ? (
                       <>
                         <Check size={14} />
+
                         <span className="hidden sm:inline">
                           Copied
                         </span>
@@ -459,6 +512,7 @@ export default function Codebase() {
                     ) : (
                       <>
                         <Copy size={14} />
+
                         <span className="hidden sm:inline">
                           Copy
                         </span>
@@ -466,10 +520,11 @@ export default function Codebase() {
                     )}
                   </button>
 
+                  {/* DESKTOP CLOSE */}
                   <button
                     type="button"
                     onClick={closeViewer}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.09] bg-white/[0.025] text-zinc-300 transition hover:bg-white/[0.06] hover:text-white"
+                    className="hidden h-8 w-8 items-center justify-center rounded-lg border border-white/[0.09] bg-white/[0.025] text-zinc-300 transition hover:bg-white/[0.06] hover:text-white lg:flex"
                     aria-label="Close file"
                   >
                     <X size={15} />
@@ -477,25 +532,28 @@ export default function Codebase() {
                 </div>
               </div>
 
-              <div className="min-h-0 flex-1 overflow-auto">
+              {/* CODE CONTENT */}
+              <div className="min-h-0 min-w-0 flex-1 overflow-auto">
+
                 {loadingFile ? (
-                  <div className="flex min-h-[400px] h-full items-center justify-center">
+                  <div className="flex h-full min-h-[300px] items-center justify-center">
                     <div className="flex items-center gap-3 text-[12px] font-medium text-zinc-300">
                       <Loader2
                         size={17}
                         className="animate-spin"
                       />
+
                       Loading file...
                     </div>
                   </div>
                 ) : fileError ? (
-                  <div className="flex min-h-[400px] h-full items-center justify-center p-8">
+                  <div className="flex h-full min-h-[300px] items-center justify-center p-6 sm:p-8">
                     <div className="max-w-md text-center">
                       <div className="text-[13px] font-semibold text-white">
                         Unable to load file
                       </div>
 
-                      <p className="mt-2 text-[12px] leading-5 text-zinc-300">
+                      <p className="mt-2 break-words text-[12px] leading-5 text-zinc-300">
                         {fileError}
                       </p>
                     </div>
@@ -513,7 +571,7 @@ export default function Codebase() {
                     }
                   />
                 ) : (
-                  <div className="flex min-h-[400px] h-full items-center justify-center text-[12px] text-zinc-300">
+                  <div className="flex h-full min-h-[300px] items-center justify-center text-[12px] text-zinc-300">
                     No source code available.
                   </div>
                 )}
@@ -543,12 +601,10 @@ function CodeBlock({
         resolvedLanguage &&
         hljs.getLanguage(resolvedLanguage)
       ) {
-        const highlighted = hljs.highlight(
-          content,
-          {
+        const highlighted =
+          hljs.highlight(content, {
             language: resolvedLanguage,
-          }
-        ).value;
+          }).value;
 
         return splitHighlightedLines(
           highlighted,
@@ -584,9 +640,10 @@ function CodeBlock({
                 : "hover:bg-white/[0.025]",
             ].join(" ")}
           >
+            {/* LINE NUMBER */}
             <div
               className={[
-                "sticky left-0 z-10 w-14 shrink-0 select-none border-r border-white/[0.06] bg-[#11151c] px-3 text-right text-zinc-400",
+                "sticky left-0 z-10 w-11 shrink-0 select-none border-r border-white/[0.06] bg-[#11151c] px-2 text-right text-zinc-400 sm:w-14 sm:px-3",
                 isSelected
                   ? "text-blue-300"
                   : "",
@@ -595,9 +652,10 @@ function CodeBlock({
               {lineNumber}
             </div>
 
+            {/* CODE LINE */}
             <div
               className={[
-                "code-line px-5 whitespace-pre",
+                "code-line whitespace-pre px-3 sm:px-5",
                 isSelected
                   ? "text-white"
                   : "",
@@ -695,7 +753,11 @@ function splitHighlightedLines(
   const result = [];
   let current = "";
 
-  for (let i = 0; i < highlighted.length; i++) {
+  for (
+    let i = 0;
+    i < highlighted.length;
+    i++
+  ) {
     const char = highlighted[i];
 
     if (char === "\n") {
@@ -731,4 +793,3 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-
