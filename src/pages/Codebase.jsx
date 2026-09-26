@@ -277,9 +277,9 @@ export default function Codebase() {
             selectedNode
               ? "hidden lg:flex"
               : "flex",
-            "w-full min-h-0 shrink-0 bg-[#0c1016]",
+            "h-0 min-h-0 w-full flex-1 shrink-0 bg-[#0c1016]",
             "border-b border-white/[0.09]",
-            "lg:w-[330px] lg:border-b-0 lg:border-r",
+            "lg:h-auto lg:flex-none lg:w-[330px] lg:border-b-0 lg:border-r",
           ].join(" ")}
         >
           <div className="flex h-full min-h-0 w-full flex-col">
@@ -793,3 +793,4 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
