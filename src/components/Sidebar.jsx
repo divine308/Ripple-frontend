@@ -66,7 +66,7 @@ export default function Sidebar({
     ].join(" ")}> 
  
       {/* Workspace */} 
-      <div className="p-4"> 
+      <div className="px-4 pb-4 pt-8"> 
  
         <div className="mb-3 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400"> 
           Workspace 
