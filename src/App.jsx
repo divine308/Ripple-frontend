@@ -14,11 +14,17 @@ import Verification from "./pages/Verification";
 import Bob from "./pages/Bob";
 import Agents from "./pages/Agents";
 import Codebase from "./pages/Codebase";
+import Demo from "./pages/Demo";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* Full-screen cinematic demo */}
+        <Route path="/demo" element={<Demo />} />
+
+        {/* Main Ripple application */}
         <Route element={<AppLayout />}>
           <Route
             path="/"
@@ -65,6 +71,7 @@ export default function App() {
           path="*"
           element={<Navigate to="/overview" replace />}
         />
+
       </Routes>
     </BrowserRouter>
   );
